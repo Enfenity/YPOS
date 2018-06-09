@@ -1,0 +1,15 @@
+{
+    "logging" : [
+        {
+            "name": "file",
+            "level": "debug",
+            "filename": "/var/log/ypos/command/application.log"
+        }
+    ],
+    "mongo": {
+        "database_host" : "mongodb://localhost:27017/YPOS",
+        "options" : {
+            "config":{"autoIndex": true}
+        }
+    }
+}

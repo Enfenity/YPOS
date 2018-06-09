@@ -1,0 +1,10 @@
+server/business-query/node_modules/
+server/command/node_modules/
+server/customer-query/node_modules/
+server/gateway/node_modules/
+server/product-query/node_modules/
+server/provider-query/node_modules/
+server/shopping-cart-query/node_modules/
+server/user-query/node_modules/
+node_modules/
+.idea/

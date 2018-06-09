@@ -1,0 +1,1716 @@
+swagger: "2.0"
+info:
+  description: "Gateway to Yocale Point Of Sale"
+  version: "1.0.0"
+  title: "Yocale Point Of Sale Gateway"
+host: "localhost:4000"
+basePath: "/v1"
+tags:
+- name: "gateway"
+  description: "Operations related to gateway"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /user:
+    get:
+      tags:
+      - "user"
+      description: "returns all the user records"
+      operationId: "getAllUsers"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "An array of users"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/userResponse"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "UserController"
+    post:
+      tags:
+      - "user"
+      description: "Creates a user"
+      operationId: "createUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "user"
+        description: "The user entity details"
+        required: true
+        schema:
+          $ref: "#/definitions/userCreateRequest"
+      responses:
+        201:
+          description: "success response that the user has been added"
+          schema:
+            $ref: "#/definitions/userResponse"
+        400:
+          description: "Validation Error. Usually caused by a missing or invalid parameter."
+          schema:
+            $ref: "#/definitions/validationErrorModel"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "UserController"
+  /user/{id}:
+    put:
+      tags:
+      - "user"
+      description: "Updates a user"
+      operationId: "updateUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "The id of user entity that will be updated"
+        required: true
+        type: "string"
+        format: "uuid"
+      - in: "body"
+        name: "user"
+        description: "The user entity details"
+        required: true
+        schema:
+          $ref: "#/definitions/userUpdateRequest"
+      responses:
+        200:
+          description: "Updated user"
+          schema:
+            $ref: "#/definitions/userResponse"
+        400:
+          description: "Validation Error. Usually caused by a missing or invalid parameter."
+          schema:
+            $ref: "#/definitions/validationErrorModel"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "UserController"
+    delete:
+        tags:
+        - "user"
+        description: "Deletes a user"
+        operationId: "deleteUser"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of user entity that will be deleted"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "Deleted user"
+            schema:
+              $ref: "#/definitions/userResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "UserController"
+    get:
+        tags:
+        - "user"
+        description: "Returns a user"
+        operationId: "getSingleUser"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of user entity that will be returned"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "A single user"
+            schema:
+              $ref: "#/definitions/userResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          404:
+            description: "Resource Not Found"
+            schema:
+              $ref: "#/definitions/resourceNotFoundErrorModel"
+
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "UserController"
+
+  /business:
+    get:
+      tags:
+      - "business"
+      description: "returns all the business records"
+      operationId: "getAllBusinesses"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "An array of businesses"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/businessResponse"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "BusinessController"
+    post:
+      tags:
+      - "business"
+      description: "Creates a business"
+      operationId: "createBusiness"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "business"
+        description: "The business entity details"
+        required: true
+        schema:
+          $ref: "#/definitions/businessCreateRequest"
+      responses:
+        201:
+          description: "success response that the business has been added"
+          schema:
+            $ref: "#/definitions/businessResponse"
+        400:
+          description: "Validation Error. Usually caused by a missing or invalid parameter."
+          schema:
+            $ref: "#/definitions/validationErrorModel"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "BusinessController"
+
+  /business/{id}:
+    put:
+      tags:
+      - "business"
+      description: "Updates a business"
+      operationId: "updateBusiness"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "The id of business entity that will be updated"
+        required: true
+        type: "string"
+        format: "uuid"
+      - in: "body"
+        name: "business"
+        description: "The business entity details"
+        required: true
+        schema:
+          $ref: "#/definitions/businessUpdateRequest"
+      responses:
+        200:
+          description: "Updated business"
+          schema:
+            $ref: "#/definitions/businessResponse"
+        400:
+          description: "Validation Error. Usually caused by a missing or invalid parameter."
+          schema:
+            $ref: "#/definitions/validationErrorModel"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "BusinessController"
+    delete:
+        tags:
+        - "business"
+        description: "Deletes a business"
+        operationId: "deleteBusiness"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of business entity that will be deleted"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "Deleted business"
+            schema:
+              $ref: "#/definitions/businessResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "BusinessController"
+    get:
+        tags:
+        - "business"
+        description: "Returns a business"
+        operationId: "getSingleBusiness"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of business entity that will be returned"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "A single business"
+            schema:
+              $ref: "#/definitions/businessResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          404:
+            description: "Resource Not Found"
+            schema:
+              $ref: "#/definitions/resourceNotFoundErrorModel"
+
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "BusinessController"
+
+  /product:
+    get:
+      tags:
+      - "product"
+      description: "returns all the product records"
+      operationId: "getAllProducts"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "An array of products"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/productResponse"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "ProductController"
+    post:
+      tags:
+      - "product"
+      description: "Creates a product"
+      operationId: "createProduct"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "product"
+        description: "The product entity details"
+        required: true
+        schema:
+          $ref: "#/definitions/productCreateRequest"
+      responses:
+        201:
+          description: "success response that the user has been added"
+          schema:
+            $ref: "#/definitions/productResponse"
+        400:
+          description: "Validation Error. Usually caused by a missing or invalid parameter."
+          schema:
+            $ref: "#/definitions/validationErrorModel"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "ProductController"
+  /product/{id}:
+    put:
+      tags:
+      - "product"
+      description: "Updates a product"
+      operationId: "updateProduct"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "The id of product entity that will be updated"
+        required: true
+        type: "string"
+        format: "uuid"
+      - in: "body"
+        name: "product"
+        description: "The product entity details"
+        required: true
+        schema:
+          $ref: "#/definitions/productUpdateRequest"
+      responses:
+        200:
+          description: "Updated product"
+          schema:
+            $ref: "#/definitions/productResponse"
+        400:
+          description: "Validation Error. Usually caused by a missing or invalid parameter."
+          schema:
+            $ref: "#/definitions/validationErrorModel"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "ProductController"
+    delete:
+        tags:
+        - "product"
+        description: "Deletes a product"
+        operationId: "deleteProduct"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of product entity that will be deleted"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "Deleted product"
+            schema:
+              $ref: "#/definitions/productResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "ProductController"
+    get:
+        tags:
+        - "product"
+        description: "Returns a product"
+        operationId: "getSingleProduct"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of product entity that will be returned"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "A single product"
+            schema:
+              $ref: "#/definitions/productResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          404:
+            description: "Resource Not Found"
+            schema:
+              $ref: "#/definitions/resourceNotFoundErrorModel"
+
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "ProductController"
+
+  /customer:
+    get:
+      tags:
+      - "customer"
+      description: "returns all the customer records"
+      operationId: "getAllCustomers"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "An array of customers"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/customerResponse"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "CustomerController"
+    post:
+      tags:
+      - "customer"
+      description: "Creates a customer"
+      operationId: "createCustomer"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "customer"
+        description: "The customer entity details"
+        required: true
+        schema:
+          $ref: "#/definitions/customerCreateRequest"
+      responses:
+        201:
+          description: "success response that the user has been added"
+          schema:
+            $ref: "#/definitions/customerResponse"
+        400:
+          description: "Validation Error. Usually caused by a missing or invalid parameter."
+          schema:
+            $ref: "#/definitions/validationErrorModel"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "CustomerController"
+
+  /customer/{id}:
+    delete:
+        tags:
+        - "customer"
+        description: "Deletes a customer"
+        operationId: "deleteCustomer"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of customer entity that will be deleted"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "Deleted customer"
+            schema:
+              $ref: "#/definitions/customerResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "CustomerController"
+    get:
+        tags:
+        - "customer"
+        description: "Returns a customer"
+        operationId: "getSingleCustomer"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of customer entity that will be returned"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "A single customer"
+            schema:
+              $ref: "#/definitions/customerResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          404:
+            description: "Resource Not Found"
+            schema:
+              $ref: "#/definitions/resourceNotFoundErrorModel"
+
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "CustomerController"
+
+  /customer/{id}/business:
+    post:
+      tags:
+      - "customer"
+      description: "Links a business to a customer"
+      operationId: "addCustomerBusiness"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "The id of customer entity that the business will be linked to"
+        required: true
+        type: "string"
+        format: "uuid"
+      - in: "body"
+        name: "business"
+        description: "The entity details"
+        required: true
+        schema:
+          $ref: "#/definitions/businessCreateRequest"
+      responses:
+        200:
+          description: "success response that the buisness has been linked to customer"
+          schema:
+            $ref: "#/definitions/customerResponse"
+        400:
+          description: "Validation Error. Usually caused by a missing or invalid parameter."
+          schema:
+            $ref: "#/definitions/validationErrorModel"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "CustomerBusinessController"
+
+  /customer/{id}/business/{businessId}:
+    delete:
+        tags:
+        - "customer"
+        description: "Unlinks a business from a customer"
+        operationId: "removeCustomerBusiness"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of customer entity that the business will be unlinked from"
+          required: true
+          type: "string"
+          format: "uuid"
+        - in: "path"
+          name: "businessId"
+          description: "The id of business entity that will be unlinked"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "Customer entity"
+            schema:
+              $ref: "#/definitions/customerResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "CustomerBusinessController"
+
+  /provider:
+    get:
+      tags:
+      - "provider"
+      description: "returns all the provider records"
+      operationId: "getAllProviders"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "An array of providers"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/providerResponse"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "ProviderController"
+    post:
+      tags:
+      - "provider"
+      description: "Creates a provider"
+      operationId: "createProvider"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "provider"
+        description: "The provider entity details"
+        required: true
+        schema:
+          $ref: "#/definitions/providerCreateRequest"
+      responses:
+        201:
+          description: "success response that the provider has been added"
+          schema:
+            $ref: "#/definitions/customerResponse"
+        400:
+          description: "Validation Error. Usually caused by a missing or invalid parameter."
+          schema:
+            $ref: "#/definitions/validationErrorModel"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "ProviderController"
+
+  /provider/{id}:
+    delete:
+        tags:
+        - "provider"
+        description: "Deletes a provider"
+        operationId: "deleteProvider"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of provider entity that will be deleted"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "Deleted provider"
+            schema:
+              $ref: "#/definitions/providerResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "ProviderController"
+    get:
+        tags:
+        - "provider"
+        description: "Returns a provider"
+        operationId: "getSingleProvider"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of provider entity that will be returned"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "A single provider"
+            schema:
+              $ref: "#/definitions/providerResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          404:
+            description: "Resource Not Found"
+            schema:
+              $ref: "#/definitions/resourceNotFoundErrorModel"
+
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "ProviderController"
+
+  /provider/{id}/business:
+    post:
+      tags:
+      - "provider"
+      description: "Links a business to a provider"
+      operationId: "addProviderBusiness"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "The id of provider entity that the business will be linked to"
+        required: true
+        type: "string"
+        format: "uuid"
+      - in: "body"
+        name: "business"
+        description: "The entity details"
+        required: true
+        schema:
+          $ref: "#/definitions/businessCreateRequest"
+      responses:
+        200:
+          description: "success response that the buisness has been linked to provider"
+          schema:
+            $ref: "#/definitions/customerResponse"
+        400:
+          description: "Validation Error. Usually caused by a missing or invalid parameter."
+          schema:
+            $ref: "#/definitions/validationErrorModel"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "ProviderBusinessController"
+
+  /provider/{id}/business/{businessId}:
+    delete:
+        tags:
+        - "provider"
+        description: "Unlinks a business from a provider"
+        operationId: "removeProviderBusiness"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of provider entity that the business will be unlinked from"
+          required: true
+          type: "string"
+          format: "uuid"
+        - in: "path"
+          name: "businessId"
+          description: "The id of business entity that will be unlinked"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "Provider entity"
+            schema:
+              $ref: "#/definitions/providerResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "ProviderBusinessController"
+
+  /shopping-cart:
+    get:
+      tags:
+      - "shopping-cart"
+      description: "returns all the shopping-cart records"
+      operationId: "getAllShoppingCarts"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "An array of shopping-carts"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/shoppingCartResponse"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "ShoppingCartController"
+    post:
+      tags:
+      - "shopping-cart"
+      description: "Creates a shopping-cart"
+      operationId: "createShoppingCart"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "shoppingCart"
+        description: "The shopping-cart entity details"
+        required: true
+        schema:
+          $ref: "#/definitions/shoppingCartCreateRequest"
+      responses:
+        201:
+          description: "success response that the user has been added"
+          schema:
+            $ref: "#/definitions/shoppingCartResponse"
+        400:
+          description: "Validation Error. Usually caused by a missing or invalid parameter."
+          schema:
+            $ref: "#/definitions/validationErrorModel"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "ShoppingCartController"
+
+  /shopping-cart/{id}:
+    delete:
+        tags:
+        - "shopping-cart"
+        description: "Deletes a shopping-cart"
+        operationId: "deleteShoppingCart"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of shopping-cart entity that will be deleted"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "Deleted shopping-cart"
+            schema:
+              $ref: "#/definitions/shoppingCartResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "ShoppingCartController"
+    get:
+        tags:
+        - "shopping-cart"
+        description: "Returns a shopping-cart"
+        operationId: "getSingleShoppingCart"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of shopping-cart entity that will be returned"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "A single shopping-cart"
+            schema:
+              $ref: "#/definitions/shoppingCartResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          404:
+            description: "Resource Not Found"
+            schema:
+              $ref: "#/definitions/resourceNotFoundErrorModel"
+
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "ShoppingCartController"
+
+  /shopping-cart/{id}/item:
+    post:
+      tags:
+      - "shopping-cart"
+      description: "Adds an item to a shopping-cart"
+      operationId: "addShoppingCartItem"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "The id of shopping-cart entity that the item will be added to"
+        required: true
+        type: "string"
+        format: "uuid"
+      - in: "body"
+        name: "shoppingCart"
+        description: "The shopping-cart entity details"
+        required: true
+        schema:
+          $ref: "#/definitions/itemRequest"
+      responses:
+        200:
+          description: "success response that the item has been added"
+          schema:
+            $ref: "#/definitions/shoppingCartResponse"
+        400:
+          description: "Validation Error. Usually caused by a missing or invalid parameter."
+          schema:
+            $ref: "#/definitions/validationErrorModel"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "ShoppingCartItemController"
+
+  /shopping-cart/{id}/item/{itemId}:
+    delete:
+        tags:
+        - "shopping-cart"
+        description: "Deletes a shopping-cart"
+        operationId: "deleteShoppingCartItem"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "path"
+          name: "id"
+          description: "The id of shopping-cart entity that the item will be deleted from"
+          required: true
+          type: "string"
+          format: "uuid"
+        - in: "path"
+          name: "itemId"
+          description: "The id of the item that will be deleted"
+          required: true
+          type: "string"
+          format: "uuid"
+        responses:
+          200:
+            description: "Response"
+            schema:
+              $ref: "#/definitions/shoppingCartResponse"
+          405:
+            description: "Method not supported Error. Returned if an unsupported http\
+              \ method is used."
+            schema:
+              $ref: "#/definitions/clientErrorModel"
+          default:
+            description: "unexpected error"
+            schema:
+              $ref: "#/definitions/serverErrorModel"
+        x-swagger-router-controller: "ShoppingCartItemController"
+
+
+  /status:
+    get:
+      tags:
+      - "status"
+      description: "gets the status of the messaging service"
+      operationId: "getSystemStatus"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "The server status will be returned"
+          schema:
+            $ref: "#/definitions/serverStatusResponse"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "StatusController"
+
+definitions:
+  userCreateRequest:
+    type: "object"
+    required:
+    - "firstName"
+    - "lastName"
+    additionalProperties: false
+    properties:
+      firstName:
+        type: "string"
+        maxLength: 128
+        description: "The firstname of the user"
+      lastName:
+        type: "string"
+        maxLength: 128
+        description: "The lastname of the user"
+      email:
+        type: "string"
+        format: "email"
+        minLength: 6
+        maxLength: 128
+        description: "The email of the user"
+
+  userResponse:
+    type: "object"
+    required:
+    - "firstName"
+    - "lastName"
+    properties:
+      firstName:
+        type: "string"
+        maxLength: 128
+        description: "The firstname of the user"
+      lastName:
+        type: "string"
+        maxLength: 128
+        description: "The lastname of the user"
+      email:
+        type: "string"
+        format: "email"
+        minLength: 6
+        maxLength: 128
+      status:
+        type: "string"
+        enum: ["active", "inactive"]
+        description: "The firstname of the user"
+      createdAt:
+        type: "string"
+        description: "The created date"
+      updatedAt:
+        type: "string"
+        description: "The updated date"
+
+  userUpdateRequest:
+    type: "object"
+    additionalProperties: false
+    properties:
+      firstName:
+        type: "string"
+        maxLength: 128
+        description: "The firstname of the user"
+      lastName:
+        type: "string"
+        maxLength: 128
+        description: "The lastname of the user"
+      email:
+        type: "string"
+        format: "email"
+        minLength: 6
+        maxLength: 128
+        description: "The email of the user"
+
+  customerCreateRequest:
+    type: "object"
+    required:
+    - "user"
+    additionalProperties: false
+    properties:
+      user:
+        $ref: "#/definitions/userCreateRequest"
+
+  customerResponse:
+    type: "object"
+    properties:
+      user:
+        $ref: "#/definitions/userResponse"
+      businesses:
+        type: array
+        items:
+          $ref: "#/definitions/businessResponse"
+      createdAt:
+        type: "string"
+        description: "The created date"
+      updatedAt:
+        type: "string"
+        description: "The updated date"
+
+  providerCreateRequest:
+    type: "object"
+    required:
+    - "user"
+    additionalProperties: false
+    properties:
+      user:
+        $ref: "#/definitions/userCreateRequest"
+
+  providerResponse:
+    type: "object"
+    properties:
+      user:
+        $ref: "#/definitions/userResponse"
+      businesses:
+        type: array
+        items:
+          $ref: "#/definitions/businessResponse"
+      createdAt:
+        type: "string"
+        description: "The created date"
+      updatedAt:
+        type: "string"
+        description: "The updated date"
+
+  productCreateRequest:
+    type: "object"
+    required:
+    - "business"
+    - "name"
+    - "price"
+    - "qtyInStock"
+    - "paymentRequirement"
+    - "currency"
+    additionalProperties: false
+    properties:
+      business:
+        $ref: "#/definitions/businessCreateRequest"
+      name:
+        type: "string"
+        maxLength: 128
+        description: "The name of the product"
+      description:
+        type: "string"
+        maxLength: 128
+        description: "The description of the product"
+      price:
+        type: "number"
+        format: "float"
+        description: "The price of the product"
+      tax:
+        type: "number"
+        format: "float"
+        description: "The tax imposed on the product"
+      qtyInStock:
+        type: "integer"
+        format: "int32"
+        description: "The available quantity of the product"
+      paymentRequirement:
+        type: "integer"
+        format: "int32"
+        enum: [0, 1, 2]
+        description:
+           "0 => full, 1 => pre-authorized, 2 => optional"
+      currency:
+        type: "string"
+        maxLength: 128
+        description: "The currency of the price and tax"
+
+  productUpdateRequest:
+    type: "object"
+    additionalProperties: false
+    properties:
+      name:
+        type: "string"
+        maxLength: 128
+        description: "The name of the product"
+      description:
+        type: "string"
+        maxLength: 128
+        description: "The description of the product"
+      price:
+        type: "number"
+        format: "float"
+        description: "The price of the product"
+      tax:
+        type: "number"
+        format: "float"
+        description: "The tax imposed on the product"
+      qtyInStock:
+        type: "integer"
+        format: "int32"
+        description: "The available quantity of the product"
+      paymentRequirement:
+        type: "integer"
+        format: "int32"
+        enum: [0, 1, 2]
+        description:
+           "0 => full, 1 => pre-authorized, 2 => optional"
+      currency:
+        type: "string"
+        maxLength: 128
+        description: "The currency of the price and tax"
+
+  productResponse:
+    type: "object"
+    required:
+    - "business"
+    - "name"
+    - "price"
+    - "qtyInStock"
+    - "paymentRequirement"
+    - "currency"
+    additionalProperties: false
+    properties:
+      business:
+        $ref: "#/definitions/businessCreateRequest"
+      name:
+        type: "string"
+        maxLength: 128
+        description: "The name of the product"
+      description:
+        type: "string"
+        maxLength: 128
+        description: "The description of the product"
+      price:
+        type: "number"
+        format: "float"
+        description: "The price of the product"
+      tax:
+        type: "number"
+        format: "float"
+        description: "The tax imposed on the product"
+      qtyInStock:
+        type: "integer"
+        format: "int32"
+        description: "The available quantity of the product"
+      paymentRequirement:
+        type: "integer"
+        format: "int32"
+        enum: [0, 1, 2]
+        description:
+           "0 => full, 1 => pre-authorized, 2 => optional"
+      currency:
+        type: "string"
+        maxLength: 128
+        description: "The currency of the price and tax"
+      createdAt:
+        type: "string"
+        description: "The created date"
+      updatedAt:
+        type: "string"
+        description: "The updated date"
+
+  shoppingCartCreateRequest:
+    type: "object"
+    required:
+    - "customer"
+    additionalProperties: false
+    properties:
+      customer:
+        $ref: "#/definitions/customerCreateRequest"
+
+  shoppingCartResponse:
+    type: "object"
+    required:
+    - "customer"
+    - "items"
+    additionalProperties: false
+    properties:
+      customer:
+        $ref: "#/definitions/customerResponse"
+      items:
+        type: array
+        items:
+          $ref: "#/definitions/itemResponse"
+      status:
+        type: "integer"
+        enum: [0, 1]
+        description:
+           "0 => new, 1 => completed"
+      createdAt:
+        type: "string"
+        description: "The created date"
+      updatedAt:
+        type: "string"
+        description: "The updated date"
+
+  itemRequest:
+    type: "object"
+    required:
+    - "type"
+    - "qty"
+    additionalProperties: false
+    properties:
+      type:
+        type: "integer"
+        enum: [0, 1]
+        description:
+           "0 => product, 1 => external"
+      product:
+        $ref: "#/definitions/productCreateRequest"
+      detail:
+        $ref: "#/definitions/itemDetail"
+      qty:
+        type: "integer"
+        format: "int32"
+        description: "The order quantity of the product"
+
+  itemResponse:
+    type: "object"
+    required:
+    - "type"
+    - "qty"
+    - "status"
+    additionalProperties: false
+    properties:
+      type:
+        type: "integer"
+        enum: [0, 1]
+        description:
+           "0 => product, 1 => external"
+      product:
+        $ref: "#/definitions/productCreateRequest"
+      payment:
+        $ref: "#/definitions/payment"
+      detail:
+        $ref: "#/definitions/itemDetail"
+      qty:
+        type: "integer"
+        format: "int32"
+        description: "The order quantity of the product"
+      status:
+        type: "integer"
+        enum: [0, 1, 2, 3]
+        description:
+           "0 => new, 1 => pre-authorized, 2 => failed-payment, 3 => paid"
+
+  itemDetail:
+    type: "object"
+    required:
+    - "name"
+    - "price"
+    properties:
+      name:
+        type: "string"
+        maxLength: 128
+        description: "The name of the product"
+      description:
+        type: "string"
+        maxLength: 128
+        description: "The description of the product"
+      price:
+        type: "number"
+        format: "float"
+        description: "The price of the product"
+      tax:
+        type: "number"
+        format: "float"
+        description: "The tax imposed on the product"
+      qtyInStock:
+        type: "integer"
+        format: "int32"
+        description: "The available quantity of the product"
+      paymentRequirement:
+        type: "integer"
+        format: "int32"
+        enum: [0, 1, 2]
+        description:
+         "0 => full, 1 => pre-authorized, 2 => optional"
+      currency:
+        type: "string"
+        maxLength: 128
+        description: "The currency of the price and tax"
+
+  payment:
+    type: "object"
+    properties:
+      amount:
+        type: "number"
+        format: "float"
+        description: "The payment amount"
+      currency:
+        type: "string"
+        maxLength: 128
+        description: "The currency of the payment"
+
+  businessResponse:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        maxLength: 128
+        description: "The name of the business"
+      createdAt:
+        type: "string"
+        description: "The created date"
+      updatedAt:
+        type: "string"
+        description: "The updated date"
+
+  businessUpdateRequest:
+    type: "object"
+    additionalProperties: false
+    properties:
+      name:
+        type: "string"
+        maxLength: 128
+        description: "The name of the business"
+
+  businessCreateRequest:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        maxLength: 128
+        description: "The name of the business"
+
+  serverStatusResponse:
+    type: "object"
+    required:
+    - "up_time"
+    properties:
+      up_time:
+        type: "number"
+        format: "double"
+
+  serverErrorModel:
+    type: "object"
+    required:
+    - "code"
+    - "message"
+    properties:
+      code:
+        type: "string"
+      message:
+        type: "string"
+      stack:
+        type: "string"
+
+  clientErrorModel:
+    type: "object"
+    required:
+    - "code"
+    - "message"
+    properties:
+      code:
+        type: "string"
+      message:
+        type: "string"
+      stack:
+        type: "string"
+
+  authorizationErrorModel:
+    type: "object"
+    required:
+    - "name"
+    - "message"
+    properties:
+      name:
+        type: "string"
+      message:
+        type: "string"
+  resourceNotFoundErrorModel:
+    type: "object"
+    required:
+    - "name"
+    - "message"
+    - "execptionMessage"
+    properties:
+      name:
+        type: "string"
+      message:
+        type: "string"
+      execptionMessage:
+        type: "string"
+
+  validationErrorModel:
+    type: "object"
+    required:
+    - "code"
+    - "message"
+    properties:
+      code:
+        type: "string"
+      message:
+        type: "string"
+      errors:
+        type: "array"
+        items:
+          $ref: "#/definitions/validationErrorSingleModel"
+  validationErrorSingleModel:
+    type: "object"
+    required:
+    - "code"
+    - "message"
+    - "path"
+    properties:
+      code:
+        type: "string"
+      message:
+        type: "string"
+      path:
+        type: "array"
+        items:
+          type: "string"
+      description:
+        type: "string"
