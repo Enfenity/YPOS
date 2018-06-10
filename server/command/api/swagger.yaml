@@ -1,13 +1,13 @@
 swagger: "2.0"
 info:
-  description: "Civitas Service"
+  description: "Yocal Point Of Sale Command Service"
   version: "1.0.0"
-  title: "Civitas Service"
+  title: "Yocal Point Of Sale Command Service"
 host: "localhost:4010"
 basePath: "/v1"
 tags:
-- name: "user"
-  description: "Operations related to entites present in Civita application"
+- name: "command"
+  description: "Operations related to command service"
   externalDocs:
     description: "Find out more"
     url: "http://swagger.io"
@@ -22,7 +22,7 @@ paths:
     get:
       tags:
       - "status"
-      description: "gets the status of the Civitas service"
+      description: "gets the status of the Command service"
       operationId: "getSystemStatus"
       consumes:
       - "application/json"
@@ -44,6 +44,42 @@ paths:
           schema:
             $ref: "#/definitions/serverErrorModel"
       x-swagger-router-controller: "StatusController"
+  /replay:
+    post:
+      tags:
+      - "user"
+      description: "Replays events"
+      operationId: "replay"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "replay"
+        description: "The replay entity details"
+        required: true
+        schema:
+          $ref: "#/definitions/replayRequest"
+      responses:
+        200:
+          description: "success response that the events have been replayed"
+          schema:
+            $ref: "#/definitions/replayResponse"
+        400:
+          description: "Validation Error. Usually caused by a missing or invalid parameter."
+          schema:
+            $ref: "#/definitions/validationErrorModel"
+        405:
+          description: "Method not supported Error. Returned if an unsupported http\
+            \ method is used."
+          schema:
+            $ref: "#/definitions/clientErrorModel"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/serverErrorModel"
+      x-swagger-router-controller: "ReplayController"
 definitions:
   serverStatusResponse:
     type: "object"
@@ -54,18 +90,24 @@ definitions:
         type: "number"
         format: "double"
 
-  item:
+  replayRequest:
     type: "object"
+    required:
+    - "root"
     properties:
-      content:
+      root:
         type: "string"
-        description: "The contents of the note"
-      status:
+        description: "The aggrate root name whose events will be replayed"
+
+  replayResponse:
+    type: "object"
+    required:
+    - "message"
+    properties:
+      message:
         type: "string"
-        description: "The status of the note document"
-        enum:
-        - "new"
-        - "complete"
+        description: "The replay execution response"
+
   serverErrorModel:
     type: "object"
     required:
