@@ -1,6 +1,9 @@
 'use strict';
 
-var app = require('express')();
+var express  = require('express');
+var app      = express();
+var path = require('path');
+
 var http = require('http');
 var swaggerTools = require('swagger-tools');
 var jsyaml = require('js-yaml');
@@ -24,8 +27,6 @@ var processHelper = require('../libs/ProcessHelper');
 
 const morgan = require('morgan');
 
-
-
 /**
  * Initialize the Swagger middleware.
  *
@@ -45,6 +46,12 @@ swaggerTools.initializeMiddleware(swaggerDoc, function callback(middleware) {
   // Validate the context header
   app.use(requestValidator.validate);
 
+  app.use(express.static(`${path.normalize(__dirname + "/../..")}/client`));
+
+  // app.get('*', function(req, res) {
+  //   res.sendFile(`${path.normalize(__dirname + "/../..")}/client/index.html`); // load the single view file (angular will handle the page changes on the front-end)
+  // });
+  
   app.use(morgan('dev'));
 
   // Route validated requests to appropriate controller

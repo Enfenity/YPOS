@@ -1,0 +1,25 @@
+<html lang="en" ng-app="YPOS">
+<head>
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+    <title>Yocale POS</title>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/bower-lodash/lodash.js"></script>
+    <script src="https://cdn.jsdelivr.net/angular-material-icons/0.4.0/angular-material-icons.min.js"></script>
+    <script src="main.js"></script>
+    <script src="constants.js"></script>
+    <script src="controllers/NavigationController.js"></script>
+    <script src="controllers/user/UserController.js"></script>
+    <script src="controllers/user/UserCreateController.js"></script>
+    <script src="controllers/user/UserUpdateController.js"></script>
+    <script src="services/UserService.js"></script>
+</head>
+<body layout="row">
+    <div ng-include="'templates/navigation.html'"></div> <ui-view></ui-view>
+</body>
+</html>

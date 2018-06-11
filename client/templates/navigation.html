@@ -1,0 +1,24 @@
+<div ng-controller="NavigationController" >
+    <md-sidenav style="height: 100%;" layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+        <md-toolbar class="md-tall">
+            <span flex></span>
+            <div style="padding: 3%;">Menu</div>
+        </md-toolbar>
+        <md-list>
+            <md-item ng-repeat="item in menu">
+                <a>
+                    <md-item-content layout="row" layout-align="start center">
+                        <div class="inset">
+                            <ng-md-icon  style="top: 0px;" icon="{{item.icon}}"></ng-md-icon>
+                        </div>
+                        <md-button style="min-width: 0px; !important;" ng-click="item.clickHandler()">{{item.title}}</md-button>
+                    </md-item-content>
+                </a>
+            </md-item>
+        </md-list>
+    </md-sidenav>
+
+
+
+
+</div>

@@ -6,5 +6,6 @@ server/product-query/node_modules/
 server/provider-query/node_modules/
 server/shopping-cart-query/node_modules/
 server/user-query/node_modules/
+client/bower_components/
 node_modules/
 .idea/
