@@ -1,0 +1,39 @@
+<md-dialog aria-label="Customer" ng-controller="ProviderLinkBusinessController as vm" style="width: 500px;" class="yo-dialog">
+    <ng-form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Provider Business</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <ng-md-icon  style="top: 0px;" icon="close"></ng-md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-progress-linear ng-if="showProgress" style="margin-bottom: 20px !important"></md-progress-linear>
+        <md-dialog-content ng-if="dependenciesLoaded">
+            <div class="md-dialog-content">
+                <ng-form name="providerForm" novalidate>
+                    <div layout="column">
+                        <md-input-container class="yo-input">
+                            <label>Businesses</label>
+                            <md-select ng-model="vm.business" name="businessSelect" required>
+                                <md-option ng-repeat="state in businesses" ng-value="state" >
+                                    {{state.name}}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="providerForm.businessSelect.$error" >
+                                <div ng-message="required">Business is required.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="row" layout-align="end center">
+                        <span flex></span>
+                        <md-button ng-disabled="!providerForm.$valid" ng-click="save()">Save</md-button>
+                    </div>
+
+                </ng-form>
+            </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>

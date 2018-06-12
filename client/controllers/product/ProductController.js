@@ -1,28 +1,46 @@
-angular.module('YPOS').controller('UserController', [
+angular.module('YPOS').controller('ProductController', [
   '$scope',
   '$rootScope',
   '$mdDialog',
-  'UserService',
+  'ProductService',
   '$window',
   function(
     $scope,
     $rootScope,
     $mdDialog,
-    userService,
+    productService,
     $window
   ){
-    $scope.$on("UserCreated", function(){
+    $scope.$on("ProductCreated", function(){
       _setupList();
     });
 
-    $scope.$on("UserUpdated", function(){
+    $scope.$on("ProductUpdated", function(){
       _setupList();
     });
+
+    $scope.getPaymentRequirement = function(value) {
+      var stringValue = "Not Recognized";
+
+      switch(value){
+        case 0:
+          stringValue = "Full";
+          break;
+        case 1:
+          stringValue = "Pre-Authorized";
+          break;
+        case 2:
+          stringValue = "Optional";
+          break;
+      }
+
+      return stringValue;
+    };
 
     $scope.addRecord = function(ev) {
       $mdDialog.show({
-        controllerUrl: '../controllers/user/UserCreateController.js',
-        templateUrl: '../../templates/user/user-create.html',
+        controllerUrl: '../controllers/product/ProductCreateController.js',
+        templateUrl: '../../templates/product/product-create.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:false,
@@ -35,7 +53,7 @@ angular.module('YPOS').controller('UserController', [
     function _setupList(){
       $scope.showProgress = true;
 
-      userService.getAllUsers(function(err, response){
+      productService.getAllProducts(function(err, response){
         if(err){
           console.error(err);
           $window.alert("Ooops, something went wrong");
@@ -45,15 +63,10 @@ angular.module('YPOS').controller('UserController', [
               {
                 name: "Update",
                 handle: function(item){
-                  $rootScope.user = {
-                    firstName: item.firstName,
-                    lastName: item.lastName,
-                    email: item.email,
-                    _id: item._id
-                  };
+                  $rootScope.product = JSON.parse(JSON.stringify(item));
                   $mdDialog.show({
-                    controllerUrl: '../controllers/user/UserUpdateController.js',
-                    templateUrl: '../../templates/user/user-update.html',
+                    controllerUrl: '../controllers/product/ProductUpdateController.js',
+                    templateUrl: '../../templates/product/product-update.html',
                     parent: angular.element(document.body),
                     clickOutsideToClose:false,
                     fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
@@ -63,7 +76,7 @@ angular.module('YPOS').controller('UserController', [
               {
                 name: "Delete",
                 handle: function(item){
-                  userService.deleteUser(item._id, function(err, response){
+                  productService.deleteProduct(item._id, function(err, response){
                     if(err){
                       console.error(err);
                       $window.alert("Ooops, something went wrong");

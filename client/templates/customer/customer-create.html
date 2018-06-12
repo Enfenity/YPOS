@@ -1,0 +1,41 @@
+<md-dialog aria-label="Customer" ng-controller="CustomerCreateController as vm" style="width: 500px;" class="yo-dialog">
+    <ng-form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Customer</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <ng-md-icon  style="top: 0px;" icon="close"></ng-md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-progress-linear ng-if="showProgress" style="margin-bottom: 20px !important"></md-progress-linear>
+        <md-dialog-content ng-if="dependenciesLoaded">
+            <div class="md-dialog-content">
+                <ng-form name="customerForm" novalidate>
+                    <div layout="column">
+
+                        <md-input-container class="yo-input">
+                            <label>Users</label>
+                            <md-select ng-model="vm.user" required  name="userSelect">
+                                <md-option ng-repeat="state in users" ng-value="state" >
+                                    {{state.firstName}}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="customerForm.userSelect.$error" >
+                                <div ng-message="required">User is required.</div>
+                            </div>
+                        </md-input-container>
+
+                    </div>
+
+                    <div layout="row" layout-align="end center">
+                        <span flex></span>
+                        <md-button ng-disabled="!customerForm.$valid" ng-click="save()">Save</md-button>
+                    </div>
+
+                </ng-form>
+            </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>

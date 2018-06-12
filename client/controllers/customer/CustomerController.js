@@ -1,28 +1,32 @@
-angular.module('YPOS').controller('UserController', [
+angular.module('YPOS').controller('CustomerController', [
   '$scope',
   '$rootScope',
   '$mdDialog',
-  'UserService',
+  'CustomerService',
   '$window',
   function(
     $scope,
     $rootScope,
     $mdDialog,
-    userService,
+    customerService,
     $window
   ){
-    $scope.$on("UserCreated", function(){
+    $scope.$on("CustomerCreated", function(){
       _setupList();
     });
 
-    $scope.$on("UserUpdated", function(){
+    $scope.$on("CustomerUpdated", function(){
+      _setupList();
+    });
+
+    $scope.$on("CustomerBusinessLinked", function(){
       _setupList();
     });
 
     $scope.addRecord = function(ev) {
       $mdDialog.show({
-        controllerUrl: '../controllers/user/UserCreateController.js',
-        templateUrl: '../../templates/user/user-create.html',
+        controllerUrl: '../controllers/customer/CustomerCreateController.js',
+        templateUrl: '../../templates/customer/customer-create.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:false,
@@ -35,7 +39,7 @@ angular.module('YPOS').controller('UserController', [
     function _setupList(){
       $scope.showProgress = true;
 
-      userService.getAllUsers(function(err, response){
+      customerService.getAllCustomers(function(err, response){
         if(err){
           console.error(err);
           $window.alert("Ooops, something went wrong");
@@ -43,17 +47,12 @@ angular.module('YPOS').controller('UserController', [
           for(var i = 0; i < response.data.length; i++){
             response.data[i].options = [
               {
-                name: "Update",
+                name: "Link Business",
                 handle: function(item){
-                  $rootScope.user = {
-                    firstName: item.firstName,
-                    lastName: item.lastName,
-                    email: item.email,
-                    _id: item._id
-                  };
+                  $rootScope.customer = item;
                   $mdDialog.show({
-                    controllerUrl: '../controllers/user/UserUpdateController.js',
-                    templateUrl: '../../templates/user/user-update.html',
+                    controllerUrl: '../controllers/customer/CustomerLinkBusinessController.js',
+                    templateUrl: '../../templates/customer/customer-link-business.html',
                     parent: angular.element(document.body),
                     clickOutsideToClose:false,
                     fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
@@ -63,7 +62,7 @@ angular.module('YPOS').controller('UserController', [
               {
                 name: "Delete",
                 handle: function(item){
-                  userService.deleteUser(item._id, function(err, response){
+                  customerService.deleteCustomer(item._id, function(err, response){
                     if(err){
                       console.error(err);
                       $window.alert("Ooops, something went wrong");

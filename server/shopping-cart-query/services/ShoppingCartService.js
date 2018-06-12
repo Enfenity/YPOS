@@ -210,9 +210,12 @@ module.exports = {
 
     if (!appUtil.isNullOrUndefined(cart)) {
       if(cart.items && cart.items.length > 0) {
-        cart.items.push(request.item);
+        _.forEach(request.items, item => {
+          cart.items.push(item);
+        });
+        
       } else {
-        cart.items = [request.item];
+        cart.items = request.items;
       }
 
       await cart.save();

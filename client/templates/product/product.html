@@ -1,0 +1,78 @@
+<div ng-controller="ProductController" style="width: 1720px; padding: 10%;" layout="row" layout-align="center center">
+    <md-card layout="column" style="width: 750px;">
+        <md-toolbar layout="row">
+            <div class="md-toolbar-tools">
+                <span>Products</span>
+            </div>
+        </md-toolbar>
+        <md-progress-linear ng-if="showProgress" style="height: 3px;"></md-progress-linear>
+        <md-content>
+            <md-list flex style="height:352px;">
+                <md-list-item class="md-3-line" ng-repeat="item in models" ng-click="null" style="background-color: white; padding: 1% 0;">
+                    <div class="md-list-item-text" layout="column">
+                        <table>
+                            <tr>
+                                <td>
+                                    <h4><strong>Name:</strong> {{ item.name }}</h4>
+                                </td>
+                                <td>
+                                    <h4><strong>Description:</strong> {{ item.description }}</h4>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <h4><strong>Price:</strong> {{ item.price }}</h4>
+                                </td>
+
+                                <td>
+                                    <h4><strong>Tax:</strong> {{ item.tax }}</h4>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <h4><strong>Quantity in Stock:</strong> {{ item.qtyInStock }}</h4>
+                                </td>
+
+                                <td>
+                                    <h4><strong>Payment requirement:</strong> {{ getPaymentRequirement(item.paymentRequirement) }}</h4>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <h4><strong>Currency:</strong> {{ item.currency }}</h4>
+                                </td>
+
+                                <td>
+                                    <h4 ng-if="item.business"><strong>Business:</strong> {{ item.business.name }}</h4>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <md-menu md-offset="0 -7">
+                        <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+                            <ng-md-icon style="top: 0px;" icon="more_vert"></ng-md-icon>
+                        </md-button>
+                        <md-menu-content width="2">
+                            <md-menu-item ng-repeat="option in item.options">
+                                <md-button ng-click="option.handle(item)"><span
+                                        md-menu-align-target>{{option.name}} </span></md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </md-list-item>
+            </md-list>
+        </md-content>
+
+        <div layout="row" layout-align="end center">
+            <md-button class="md-fab md-primary" style="margin: 3%;" aria-label="add user" ng-click="addRecord()">
+                <ng-md-icon style="top: 0px;" icon="add"></ng-md-icon>
+            </md-button>
+        </div>
+
+
+    </md-card>
+</div>

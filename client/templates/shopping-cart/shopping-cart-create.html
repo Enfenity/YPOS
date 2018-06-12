@@ -1,0 +1,88 @@
+<md-dialog aria-label="User" ng-controller="ShoppingCartCreateController as vm" style="width: 500px;" class="yo-dialog">
+    <ng-form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Shopping Cart</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <ng-md-icon  style="top: 0px;" icon="close"></ng-md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-progress-linear ng-if="showProgress" style="height: 3px;"></md-progress-linear>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-input-container class="yo-input" style="margin-left: 15px; margin-top: 30px;">
+                    <label>Customers</label>
+                    <md-select ng-model="vm.customer" >
+                        <md-option ng-repeat="state in customers" ng-value="state" >
+                            {{state.user.firstName}} {{state.user.lastName}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-list flex style="height:352px;" ng-if="vm.customer">
+                    <md-list-item class="md-3-line" ng-repeat="item in products" ng-click="null" style="background-color: white;">
+                        <div class="md-list-item-text" layout="row">
+                            <h4><strong>Name:</strong> {{item.name}}</h4>
+                            <h4 style="margin-left: 5%;"><strong>Price:</strong> {{item.price}}</h4>
+                            <md-input-container class="md-block yo-input" style="margin: -1% 0 0 5%; width: 40px;">
+                                <input name="productName" ng-model="item.qtyToBuy">
+                            </md-input-container>
+                        </div>
+                    </md-list-item>
+                </md-list>
+
+                <div layout="row" layout-align="end center" ng-if="vm.customer">
+                    <md-button class="md-primary" style="margin: 3%;" aria-label="buy" ng-click="buy()">
+                        Buy
+                    </md-button>
+                </div>
+
+            </div>
+        </md-dialog-content>
+        </form>
+</md-dialog>
+
+
+<!--<div ng-controller="ShoppingCartCreateController as vm" style="width: 1720px; padding: 10%;" layout="row" layout-align="center center">-->
+ <!--<md-card layout="column" style="width: 750px;">-->
+     <!--<md-toolbar layout="row">-->
+         <!--<div class="md-toolbar-tools">-->
+             <!--<span>Purchase</span>-->
+         <!--</div>-->
+     <!--</md-toolbar>-->
+     <!--<md-progress-linear ng-if="showProgress" style="height: 3px;"></md-progress-linear>-->
+     <!--<md-content>-->
+
+         <!--<md-input-container class="yo-input" style="margin-left: 15px; margin-top: 30px;">-->
+             <!--<label>Customers</label>-->
+             <!--<md-select ng-model="vm.customer" >-->
+                 <!--<md-option ng-repeat="state in customers" ng-value="state" >-->
+                     <!--{{state.user.firstName}} {{state.user.lastName}}-->
+                 <!--</md-option>-->
+             <!--</md-select>-->
+         <!--</md-input-container>-->
+
+         <!--<md-list flex style="height:352px;" ng-if="vm.customer">-->
+             <!--<md-list-item class="md-3-line" ng-repeat="item in products" ng-click="null" style="background-color: white;">-->
+                 <!--<div class="md-list-item-text" layout="row">-->
+                     <!--<h4><strong>Name:</strong> {{item.name}}</h4>-->
+                     <!--<h4 style="margin-left: 5%;"><strong>Price:</strong> {{item.price}}</h4>-->
+                     <!--<md-input-container class="md-block yo-input" style="margin: -1% 0 0 5%; width: 40px;">-->
+                         <!--<input name="productName" ng-model="item.qtyToBuy">-->
+                     <!--</md-input-container>-->
+                 <!--</div>-->
+             <!--</md-list-item>-->
+         <!--</md-list>-->
+     <!--</md-content>-->
+
+     <!--<div layout="row" layout-align="end center" ng-if="vm.customer">-->
+         <!--<md-button class="md-primary" style="margin: 3%;" aria-label="buy" ng-click="buy()">-->
+             <!--Buy-->
+         <!--</md-button>-->
+     <!--</div>-->
+
+
+ <!--</md-card>-->
+<!--</div>-->

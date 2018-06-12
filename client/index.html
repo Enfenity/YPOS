@@ -9,17 +9,47 @@
     <script src="bower_components/angular-animate/angular-animate.min.js"></script>
     <script src="bower_components/angular-messages/angular-messages.min.js"></script>
     <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/angular-material-icons/angular-material-icons.min.js"></script>
     <script src="bower_components/bower-lodash/lodash.js"></script>
-    <script src="https://cdn.jsdelivr.net/angular-material-icons/0.4.0/angular-material-icons.min.js"></script>
     <script src="main.js"></script>
     <script src="constants.js"></script>
+
+    <!--controllers-->
     <script src="controllers/NavigationController.js"></script>
+
     <script src="controllers/user/UserController.js"></script>
     <script src="controllers/user/UserCreateController.js"></script>
     <script src="controllers/user/UserUpdateController.js"></script>
+
+    <script src="controllers/product/ProductController.js"></script>
+    <script src="controllers/product/ProductCreateController.js"></script>
+    <script src="controllers/product/ProductUpdateController.js"></script>
+
+    <script src="controllers/customer/CustomerController.js"></script>
+    <script src="controllers/customer/CustomerCreateController.js"></script>
+    <script src="controllers/customer/CustomerLinkBusinessController.js"></script>
+
+    <script src="controllers/provider/ProviderController.js"></script>
+    <script src="controllers/provider/ProviderCreateController.js"></script>
+    <script src="controllers/provider/ProviderLinkBusinessController.js"></script>
+
+    <script src="controllers/shopping-cart/ShoppingCartController.js"></script>
+    <script src="controllers/shopping-cart/ShoppingCartCreateController.js"></script>
+
+    <script src="controllers/business/BusinessController.js"></script>
+    <script src="controllers/business/BusinessCreateController.js"></script>
+    <script src="controllers/business/BusinessUpdateController.js"></script>
+
+    <!--services-->
     <script src="services/UserService.js"></script>
+    <script src="services/CustomerService.js"></script>
+    <script src="services/BusinessService.js"></script>
+    <script src="services/ProviderService.js"></script>
+    <script src="services/ProductService.js"></script>
+    <script src="services/ShoppingCartService.js"></script>
 </head>
 <body layout="row">
-    <div ng-include="'templates/navigation.html'"></div> <ui-view></ui-view>
+<div ng-include="'templates/navigation.html'"></div>
+<ui-view></ui-view>
 </body>
 </html>

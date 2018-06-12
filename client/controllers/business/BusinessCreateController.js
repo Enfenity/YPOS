@@ -1,14 +1,14 @@
-angular.module('YPOS').controller('UserCreateController', [
+angular.module('YPOS').controller('BusinessCreateController', [
   '$scope',
   '$rootScope',
   '$mdDialog',
-  'UserService',
+  'BusinessService',
   '$window',
   function(
     $scope,
     $rootScope,
     $mdDialog,
-    userService,
+    businessService,
     $window
   ){
     $scope.cancel = function() {
@@ -16,15 +16,13 @@ angular.module('YPOS').controller('UserCreateController', [
     };
 
     $scope.save = function() {
-      userService.createUser($scope.model, function(err, response){
+      businessService.createBusiness($scope.model, function(err, response){
         if(err){
           console.error(err);
           $window.alert("Ooops, something went wrong");
         } else {
-          setTimeout(function(){
-            $rootScope.$broadcast("UserCreated");
-            $mdDialog.cancel();
-          }, 500);
+          $rootScope.$broadcast("BusinessCreated");
+          $mdDialog.cancel();
         }
       });
     };

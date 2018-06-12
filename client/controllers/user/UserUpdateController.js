@@ -4,11 +4,13 @@ angular.module('YPOS').controller('UserUpdateController', [
   '$mdDialog',
   'UserService',
   '$window',
-  function ($scope,
-            $rootScope,
-            $mdDialog,
-            userService,
-            $window,) {
+  function (
+    $scope,
+    $rootScope,
+    $mdDialog,
+    userService,
+    $window
+  ) {
 
     $scope.model = $rootScope.user;
 
@@ -31,9 +33,9 @@ angular.module('YPOS').controller('UserUpdateController', [
           console.error(err);
           $window.alert("Ooops, something went wrong");
         } else {
+
           $rootScope.$broadcast("UserUpdated");
           $mdDialog.cancel();
-
         }
       });
     };

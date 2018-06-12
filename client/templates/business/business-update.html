@@ -1,0 +1,33 @@
+<md-dialog aria-label="Business" ng-controller="BusinessUpdateController" style="width: 500px;" class="yo-dialog">
+    <ng-form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Business</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <ng-md-icon  style="top: 0px;" icon="close"></ng-md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <ng-form name="businessForm" novalidate>
+                    <md-input-container class="md-block yo-input" >
+                        <label>Name</label>
+                        <input required name="businessName" ng-model="model.name">
+                        <div ng-messages="businessForm.businessName.$error" >
+                            <div ng-message="required">Name is required.</div>
+                        </div>
+                    </md-input-container>
+
+                    <div layout="row" layout-align="end center">
+                        <span flex></span>
+                        <md-button ng-disabled="!businessForm.$valid" ng-click="save()">Save</md-button>
+                    </div>
+
+                </ng-form>
+            </div>
+        </md-dialog-content>
+        </form>
+</md-dialog>

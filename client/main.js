@@ -13,6 +13,36 @@ app.config(function($urlRouterProvider, $stateProvider) {
     url: '/user.html',
     templateUrl: 'templates/user/user.html'
   });
+  
+  $stateProvider.state({
+    name: 'customer',
+    url: '/customer.html',
+    templateUrl: 'templates/customer/customer.html'
+  });
+  
+  $stateProvider.state({
+    name: 'business',
+    url: '/business.html',
+    templateUrl: 'templates/business/business.html'
+  });
+
+  $stateProvider.state({
+    name: 'provider',
+    url: '/provider.html',
+    templateUrl: 'templates/provider/provider.html'
+  });
+
+  $stateProvider.state({
+    name: 'product',
+    url: '/product.html',
+    templateUrl: 'templates/product/product.html'
+  });
+
+  $stateProvider.state({
+    name: 'shopping-cart',
+    url: '/shopping-cart.html',
+    templateUrl: 'templates/shopping-cart/shopping-cart.html'
+  });
 
   $urlRouterProvider.otherwise('/user.html');
 

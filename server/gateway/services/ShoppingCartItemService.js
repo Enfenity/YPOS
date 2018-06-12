@@ -24,7 +24,7 @@ module.exports = {
       constants.pubSub.message.shoppingCart.action.command.addItem,
       {
         id: args.id.value,
-        item: args.shoppingCart.value
+        items: args.shoppingCart.value
       }
     );
 

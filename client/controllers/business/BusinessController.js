@@ -1,28 +1,28 @@
-angular.module('YPOS').controller('UserController', [
+angular.module('YPOS').controller('BusinessController', [
   '$scope',
   '$rootScope',
   '$mdDialog',
-  'UserService',
+  'BusinessService',
   '$window',
   function(
     $scope,
     $rootScope,
     $mdDialog,
-    userService,
+    businessService,
     $window
   ){
-    $scope.$on("UserCreated", function(){
+    $scope.$on("BusinessCreated", function(){
       _setupList();
     });
 
-    $scope.$on("UserUpdated", function(){
+    $scope.$on("BusinessUpdated", function(){
       _setupList();
     });
 
     $scope.addRecord = function(ev) {
       $mdDialog.show({
-        controllerUrl: '../controllers/user/UserCreateController.js',
-        templateUrl: '../../templates/user/user-create.html',
+        controllerUrl: '../controllers/business/BusinessCreateController.js',
+        templateUrl: '../../templates/business/business-create.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:false,
@@ -35,7 +35,7 @@ angular.module('YPOS').controller('UserController', [
     function _setupList(){
       $scope.showProgress = true;
 
-      userService.getAllUsers(function(err, response){
+      businessService.getAllBusinesses(function(err, response){
         if(err){
           console.error(err);
           $window.alert("Ooops, something went wrong");
@@ -45,15 +45,10 @@ angular.module('YPOS').controller('UserController', [
               {
                 name: "Update",
                 handle: function(item){
-                  $rootScope.user = {
-                    firstName: item.firstName,
-                    lastName: item.lastName,
-                    email: item.email,
-                    _id: item._id
-                  };
+                  $rootScope.business = JSON.parse(JSON.stringify(item));
                   $mdDialog.show({
-                    controllerUrl: '../controllers/user/UserUpdateController.js',
-                    templateUrl: '../../templates/user/user-update.html',
+                    controllerUrl: '../controllers/business/BusinessUpdateController.js',
+                    templateUrl: '../../templates/business/business-update.html',
                     parent: angular.element(document.body),
                     clickOutsideToClose:false,
                     fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
@@ -63,7 +58,7 @@ angular.module('YPOS').controller('UserController', [
               {
                 name: "Delete",
                 handle: function(item){
-                  userService.deleteUser(item._id, function(err, response){
+                  businessService.deleteBusiness(item._id, function(err, response){
                     if(err){
                       console.error(err);
                       $window.alert("Ooops, something went wrong");

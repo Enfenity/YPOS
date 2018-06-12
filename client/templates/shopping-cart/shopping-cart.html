@@ -1,26 +1,29 @@
-<div ng-controller="UserController" style="width: 1720px; padding: 10%;" layout="row" layout-align="center center">
+<div ng-controller="ShoppingCartController" style="width: 1720px; padding: 10%;" layout="row" layout-align="center center">
  <md-card layout="column" style="width: 750px;">
      <md-toolbar layout="row">
          <div class="md-toolbar-tools">
-             <span>Users</span>
+             <span>Shopping Cart</span>
          </div>
      </md-toolbar>
      <md-progress-linear ng-if="showProgress" style="height: 3px;"></md-progress-linear>
      <md-content>
          <md-list flex style="height:352px;">
-             <md-list-item class="md-3-line" ng-repeat="item in models" ng-click="null" style="background-color: white;">
+             <md-list-item class="md-3-line" ng-repeat="cart in models" ng-click="null" style="background-color: white;">
                  <div class="md-list-item-text" layout="column">
-                     <h4><strong>First name:</strong> {{ item.firstName }}</h4>
-                     <h4><strong>Last name:</strong> {{ item.lastName }}</h4>
-                     <h4><strong>Email: </strong>{{ item.email }}</h4>
+                     <h4><strong>Customer:</strong> {{cart.customer.user.firstName}} {{cart.customer.user.lastName}}</h4>
+                     <md-chips ng-model="cart.items" md-removable="false" ng-change="onItemRemove(cart.items)">
+                         <md-chip-template>
+                             {{$chip.product.name}} * {{$chip.qty}}
+                         </md-chip-template>
+                     </md-chips>
                  </div>
                  <md-menu md-offset="0 -7">
                      <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
                          <ng-md-icon  style="top: 0px;" icon="more_vert"></ng-md-icon>
                      </md-button>
                      <md-menu-content width="2">
-                         <md-menu-item ng-repeat="option in item.options">
-                             <md-button ng-click="option.handle(item)"> <span md-menu-align-target>{{option.name}} </span></md-button>
+                         <md-menu-item ng-repeat="option in cart.options">
+                             <md-button ng-click="option.handle(cart)"> <span md-menu-align-target>{{option.name}} </span></md-button>
                          </md-menu-item>
                      </md-menu-content>
                  </md-menu>

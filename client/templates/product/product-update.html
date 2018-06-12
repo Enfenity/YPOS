@@ -1,0 +1,105 @@
+<md-dialog aria-label="User" ng-controller="ProductUpdateController as vm" style="width: 850px;" class="yo-dialog">
+    <ng-form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Product</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <ng-md-icon  style="top: 0px;" icon="close"></ng-md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <ng-form name="productForm" novalidate>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <md-input-container class="md-block yo-input">
+                                    <label>Name</label>
+                                    <input required  name="productName" ng-model="model.name">
+                                    <div ng-messages="productForm.productName.$error" >
+                                        <div ng-message="required">Name is required.</div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+
+                            <td>
+                                <md-input-container class="md-block yo-input" style="margin-left: 20%;">
+                                    <label>Description</label>
+                                    <input name="productDescription" ng-model="model.description">
+                                </md-input-container>
+                            </td>
+                        </tr>
+
+                        <tr>
+
+                            <td>
+                                <md-input-container class="md-block yo-input">
+                                    <label>Price</label>
+                                    <input required  name="productPrice" ng-model="model.price">
+                                    <div ng-messages="productForm.productPrice.$error" >
+                                        <div ng-message="required">Price is required.</div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+
+                            <td>
+                                <md-input-container class="md-block yo-input" style="margin-left: 20%;">
+                                    <label>Tax</label>
+                                    <input required  name="productTax" ng-model="model.tax">
+                                    <div ng-messages="productForm.productTax.$error" >
+                                        <div ng-message="required">Tax is required.</div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <md-input-container class="md-block yo-input">
+                                    <label>Currency</label>
+                                    <input required  name="productCurrency" ng-model="model.currency">
+                                    <div ng-messages="productForm.productCurrency.$error" >
+                                        <div ng-message="required">Currency is required.</div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+
+                            <td>
+                                <md-input-container class="md-block yo-input" style="margin-left: 20%;">
+                                    <label>Quantity in Stock</label>
+                                    <input required  name="productQtyInStock" ng-model="model.qtyInStock">
+                                    <div ng-messages="productForm.productQtyInStock.$error" >
+                                        <div ng-message="required">Quantity in stock is required.</div>
+                                    </div>
+                                </md-input-container>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div>
+                                    <md-radio-group class="md-primary" layout="row" ng-model="model.paymentRequirement" required name="productPaymentRequirement" >
+                                        <md-radio-button value="0">Full</md-radio-button>
+                                        <md-radio-button value="1">Pre-Authorized</md-radio-button>
+                                        <md-radio-button value="2">Optional</md-radio-button>
+                                    </md-radio-group>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                    <div layout="row" layout-align="end center">
+                        <span flex></span>
+                        <md-button ng-disabled="!productForm.$valid" ng-click="save()">Save</md-button>
+                    </div>
+
+                </ng-form>
+            </div>
+        </md-dialog-content>
+        </form>
+</md-dialog>
