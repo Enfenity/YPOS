@@ -23,8 +23,19 @@ module.exports = {
 
     switch(request.action){
       case constants.pubSub.message.user.action.command.create:
-        userAggregateRoot.createUser(request.payload);
-        completedEvent = userChannels.Internal.Command.CreateCompletedEvent;
+        try{
+          completedEvent = userChannels.Internal.Command.CreateCompletedEvent;
+          await userAggregateRoot.createUser(request.payload);
+        } catch(err) {
+          return internalEventEmitter.emit(
+            completedEvent,
+            {
+              statusCode: 400,
+              body: err
+            }
+          );
+        }
+
         successStatusCode = 201;
         break;
       case constants.pubSub.message.user.action.command.update:

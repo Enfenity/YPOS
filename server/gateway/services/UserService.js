@@ -5,6 +5,7 @@ var pubSub = require('../../libs/PubSub/PubSubAdapter');
 var Message = require('../../libs/PubSub/Message');
 var constants = require('../../Constants');
 var pubSubChannels = require('../../PubSubChannels');
+
 /**
  * The User Service module
  */
@@ -74,6 +75,10 @@ module.exports = {
             subscriberType: constants.pubSub.recipients.gateway
           },
           request);
+
+      if(completed.payload.statusCode === 400){
+        return next(completed.payload.body);
+      }
 
       response.statusCode = completed.payload.statusCode;
       response.setHeader('Content-Type', 'application/json');

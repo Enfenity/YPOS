@@ -36,6 +36,7 @@
                             <div ng-message="required">Email is required.</div>
                             <div ng-message="email">Your email address is invalid</div>
                         </div>
+                        <div ng-if="emailAlreadyExistsError" style="color: red;">{{emailAlreadyExistsError}}</div>
                     </md-input-container>
 
                     <div layout="row" layout-align="end center">

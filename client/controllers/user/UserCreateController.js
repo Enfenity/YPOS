@@ -3,13 +3,11 @@ angular.module('YPOS').controller('UserCreateController', [
   '$rootScope',
   '$mdDialog',
   'UserService',
-  '$window',
   function(
     $scope,
     $rootScope,
     $mdDialog,
-    userService,
-    $window
+    userService
   ){
     $scope.cancel = function() {
       $mdDialog.cancel();
@@ -18,8 +16,7 @@ angular.module('YPOS').controller('UserCreateController', [
     $scope.save = function() {
       userService.createUser($scope.model, function(err, response){
         if(err){
-          console.error(err);
-          $window.alert("Ooops, something went wrong");
+          userService.handleHttpError(err, $scope);
         } else {
           setTimeout(function(){
             $rootScope.$broadcast("UserCreated");

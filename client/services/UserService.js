@@ -1,7 +1,9 @@
 angular.module('YPOS').service('UserService', [
   '$http',
+  '$window',
   function(
     $http,
+    $window
   ){
 
     this.getAllUsers = function (callback){
@@ -50,5 +52,25 @@ angular.module('YPOS').service('UserService', [
           return callback(err, null);
         });
     };
+
+    this.handleHttpError = function (err, scope) {
+
+      var validationError = false;
+
+      if(err.data && err.data.results && err.data.results.errors && err.data.results.errors.length > 0) {
+        switch(err.data.results.errors[0].code){
+          case 100001:
+            validationError = true;
+            scope.emailAlreadyExistsError = err.data.results.errors[0].message;
+            break;
+        }
+      }
+
+      if(!validationError) {
+        console.error(err);
+        $window.alert("Ooops, something went wrong");
+      }
+
+    }
 
   }]);

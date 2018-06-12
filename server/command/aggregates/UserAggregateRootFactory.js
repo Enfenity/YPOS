@@ -2,8 +2,13 @@
 
 const constants = require('../../Constants');
 const Commit = require('../models/Commit');
+const pubSub = require('../../libs/PubSub/PubSubAdapter');
+const Message = require('../../libs/PubSub/Message');
+const pubSubChannels = require('../../PubSubChannels');
+const validationError = require('../../libs/error/ValidationError');
+const errors = require('../../ErrorCodes');
 
-function AggregateRoot(){
+function AggregateRoot() {
   let that = this;
 
   this.changes = [];
@@ -13,11 +18,44 @@ function AggregateRoot(){
     return that.changes;
   };
 
-  this.markChangesAsCommitted = function() {
+  this.markChangesAsCommitted = function () {
     that.changes = [];
   };
 
-  this.createUser = function(request){
+  this.createUser = async function (request) {
+
+    let completed =
+      await pubSub.publishAndWaitForResponse(
+        pubSubChannels.User.Query.Event,
+        pubSubChannels.User.Query.CompletedEvent,
+        {
+          subscriberType: constants.pubSub.recipients.gateway
+        },
+        new Message(
+          "",
+          "",
+          constants.pubSub.message.user.action.query.getAll,
+          {
+            email: request.email
+          }
+        ));
+
+    if (completed.payload.body && completed.payload.body.length > 0) {
+      // this means a user with the same email already exists
+
+      throw new validationError(
+        'Some validation errors occurred.',
+        [
+          {
+            code: errors.User.EMAIL_ALREADY_EXIST,
+            message: `A user with email [${request.email}] already exists.`,
+            path: ['email']
+          }
+        ]
+      )
+
+    }
+
     // var validationResult = await userValidator.validateCreate(request);
     //
     // if (validationResult) {
@@ -37,7 +75,7 @@ function AggregateRoot(){
     that.changes.push(commit);
   };
 
-  this.deleteUser = function(request){
+  this.deleteUser = function (request) {
     // var validationResult = await userValidator.validateCreate(request);
     //
     // if (validationResult) {
@@ -49,7 +87,7 @@ function AggregateRoot(){
     //     }
     //   );
     // }
-    
+
     let commit = new Commit();
     commit.data = request;
     commit.version = "1";
@@ -57,10 +95,10 @@ function AggregateRoot(){
     commit.aggregateRootName = that.aggregateRootName;
     commit.action = constants.pubSub.message.user.action.eventCommit.deleted;
     that.changes.push(commit);
-    
+
   };
 
-  this.updateUser = function(request){
+  this.updateUser = function (request) {
     // var validationResult = await userValidator.validateCreate(request);
     //
     // if (validationResult) {

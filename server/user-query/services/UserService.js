@@ -66,8 +66,26 @@ module.exports = {
 
     let users = [];
 
+    let filter = {};
+
+    if(request){
+
+      if(request.firstName) {
+        filter.firstName = request.firstName;
+      }
+
+      if(request.lastName) {
+        filter.lastName = request.lastName;
+      }
+
+      if(request.email) {
+        filter.email = request.email;
+      }
+
+    }
+
     try {
-      users = await User.find({});
+      users = await User.find(filter);
     } catch (err) {
       return internalEventEmitter.emit(
         userChannels.Internal.Query.GetAllCompletedEvent,
