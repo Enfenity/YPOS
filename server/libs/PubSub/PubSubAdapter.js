@@ -44,7 +44,7 @@ module.exports = {
       // Only publish if there are subscribers
       if (subscribers.length > 0) {
         // Push the messageId to their list
-        await pubSubHelper.addMessageIdToTypeSet(channel, type, message.header.messageId);
+        // await pubSubHelper.addMessageIdToTypeSet(channel, type, message.header.messageId);
         message.header.sentAt = new Date();
         message.recipient = type;
         console.log(`PUBLISHING TO [${channel}]`);
@@ -87,7 +87,7 @@ module.exports = {
         // Only publish if there are subscribers
         if (subscribers.length > 0) {
           // Push the messageId to their list
-          await pubSubHelper.addMessageIdToTypeSet(channel, type, message.header.messageId);
+          // await pubSubHelper.addMessageIdToTypeSet(channel, type, message.header.messageId);
           message.header.sentAt = new Date();
           message.recipient = type;
           // Then publish the message
@@ -125,14 +125,14 @@ module.exports = {
         ) {
 
           // Remove the message id from the list so that no other service consumes it
-          var result = await pubSubHelper.removeMessageIdFromTypeSet(
-            response.channel,
-            response.recipient,
-            response.header.messageId);
+          // var result = await pubSubHelper.removeMessageIdFromTypeSet(
+          //   response.channel,
+          //   response.recipient,
+          //   response.header.messageId);
 
           // Discard the message if it did not exist in the type set. (This means that the message has already been
           // consumed by another service of the same type)
-          if (result) {
+          if (true) {
             sub.unsubscribe(channel);
             sub.quit();
             resolve(response);
@@ -179,14 +179,14 @@ module.exports = {
       ) {
 
         //the first thing we do is to remove the message id from the list so that no other service consumes it
-        var result = await pubSubHelper.removeMessageIdFromTypeSet(
-          message.channel,
-          message.recipient,
-          message.header.messageId);
+        // var result = await pubSubHelper.removeMessageIdFromTypeSet(
+        //   message.channel,
+        //   message.recipient,
+        //   message.header.messageId);
 
         // Discard the message if it did not exist in the type set. (This means that the message has already been
         // consumed by another service of the same type)
-        if (result) {
+        if (true) {
           return callback(null, message);
         }
 
