@@ -30,6 +30,20 @@ function emitInternalEventCommitEvents(message, channelDetails) {
   }
 }
 
+function emitInternalBusinesssEventCommitEvents(message, channelDetails) {
+  
+  internalEventEmitter.on(channelDetails.Internal.EventCommit.UpdatedCompletedEvent, function(response){
+  });
+
+  switch (message.action) {
+    case constants.pubSub.message.business.action.eventCommit.updated:
+      internalEventEmitter.emit(channelDetails.Internal.EventCommit.UpdatedEvent, message);
+      break;
+    default:
+      console.error(`Type [${message.type}] is not supported`);
+  }
+}
+
 function emitInternalQueryEvents(message, channelDetails) {
   internalEventEmitter.on(channelDetails.Internal.Query.GetAllCompletedEvent, function(response){
     _sendQueryCompleted(message, response, channelDetails, constants.pubSub.message.product.action.query.getAll);
@@ -79,5 +93,6 @@ function _sendQueryCompleted(request, response, channelDetails, action) {
 }
 module.exports = {
   emitInternalEventCommitEvents,
+  emitInternalBusinesssEventCommitEvents,
   emitInternalQueryEvents
 };
