@@ -49,8 +49,10 @@ angular.module('YPOS').controller('CustomerLinkBusinessController', [
           console.error(err);
           $window.alert("Ooops, something went wrong");
         } else {
-          $rootScope.$broadcast("CustomerBusinessLinked");
-          $mdDialog.cancel();
+          setTimeout(function(){
+            $rootScope.$broadcast("CustomerBusinessLinked");
+            $mdDialog.cancel();
+          }, 500);
         }
       });
     };

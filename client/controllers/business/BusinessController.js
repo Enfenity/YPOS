@@ -63,7 +63,10 @@ angular.module('YPOS').controller('BusinessController', [
                       console.error(err);
                       $window.alert("Ooops, something went wrong");
                     } else {
-                      _setupList();
+                      setTimeout(function(){
+                        _setupList();
+                      }, 500);
+
                     }
                   });
                 }

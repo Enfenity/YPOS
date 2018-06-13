@@ -18,10 +18,8 @@ angular.module('YPOS').controller('UserCreateController', [
         if(err){
           userService.handleHttpError(err, $scope);
         } else {
-          setTimeout(function(){
-            $rootScope.$broadcast("UserCreated");
-            $mdDialog.cancel();
-          }, 500);
+          $rootScope.$broadcast("UserCreated");
+          $mdDialog.cancel();
         }
       });
     };

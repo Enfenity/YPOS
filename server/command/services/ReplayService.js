@@ -13,58 +13,67 @@ module.exports = {
   replay: async function replay(args, response, next) {
     var replayRequest = args.replay.value;
 
-    var uncommittedChanges = await Commit.find({aggregateRootName: replayRequest.root});
+    var filter = {};
+
+    if (replayRequest && replayRequest.root) {
+      filter.aggregateRootName = replayRequest.root;
+    }
+
+    var uncommittedChanges = await Commit.find(filter).sort('createdAt');
 
     logging.logAction(
       logging.logLevels.INFO,
-      `Attempting to replay [${replayRequest.root}] commits`
+      `Attempting to replay commits`
     );
 
     var errors = [];
 
-    var channelDetails = null;
-    
-    switch (replayRequest.root) {
-      case "User":
-        channelDetails = allChannels.User;
-        break;
-      case "Business":
-        channelDetails = allChannels.Business;
-        break;
-      case "Customer":
-        channelDetails = allChannels.Customer;
-        break;
-      case "Product":
-        channelDetails = allChannels.Product;
-        break;
-      case "Provider":
-        channelDetails = allChannels.Provider;
-        break;
-      case "ShoppingCart":
-        channelDetails = allChannels.ShoppingCart;
-        break;
-    }
-    
-    if (channelDetails) {
-      _.forEach(uncommittedChanges, async function(commit){
-        try {
-          // Now we need to propagate the commit
-          var commitEvent = new Message(
-            "",
-            "",
-            commit.action,
-            commit
-          );
+    _.forEach(uncommittedChanges, async function(commit){
+      try {
 
-          await pubSub.publish(
-            channelDetails.EventCommit.Event,
-            {},
-            commitEvent);
-        } catch (err) {
-          errors.push(err);
+        var channelDetails = null;
+
+        switch (commit.aggregateRootName) {
+          case "User":
+            channelDetails = allChannels.User;
+            break;
+          case "Business":
+            channelDetails = allChannels.Business;
+            break;
+          case "Customer":
+            channelDetails = allChannels.Customer;
+            break;
+          case "Product":
+            channelDetails = allChannels.Product;
+            break;
+          case "Provider":
+            channelDetails = allChannels.Provider;
+            break;
+          case "ShoppingCart":
+            channelDetails = allChannels.ShoppingCart;
+            break;
         }
-      });  
-    }
+
+        // Now we need to propagate the commit
+        var commitEvent = new Message(
+          "",
+          "",
+          commit.action,
+          commit
+        );
+
+       await pubSub.publishAndWaitForResponse(
+          channelDetails.EventCommit.Event,
+          channelDetails.EventCommit.CompletedEvent,
+          {
+            subscriberType: commit.aggregateRootName.toLowerCase()
+          },
+          commitEvent);
+
+      } catch (err) {
+        errors.push(err);
+      }
+    });
 
     if(errors.length > 0){
       return next(errors);

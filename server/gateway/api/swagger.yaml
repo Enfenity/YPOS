@@ -408,7 +408,7 @@ paths:
           $ref: "#/definitions/productCreateRequest"
       responses:
         201:
-          description: "success response that the user has been added"
+          description: "success response that the product has been added"
           schema:
             $ref: "#/definitions/productResponse"
         400:
@@ -1339,7 +1339,7 @@ definitions:
     additionalProperties: false
     properties:
       business:
-        $ref: "#/definitions/businessCreateRequest"
+        $ref: "#/definitions/productBusiness"
       name:
         type: "string"
         maxLength: 128
@@ -1406,6 +1406,21 @@ definitions:
         maxLength: 128
         description: "The currency of the price and tax"
 
+  productBusiness:
+      type: "object"
+      required:
+      - "name"
+      - "id"
+      properties:
+        name:
+          type: "string"
+          maxLength: 128
+          description: "The name of the business"
+        id:
+          type: "string"
+          format: "uuid"
+          description: "The id of the business"
+
   productResponse:
     type: "object"
     required:
@@ -1418,7 +1433,7 @@ definitions:
     additionalProperties: false
     properties:
       business:
-        $ref: "#/definitions/businessCreateRequest"
+        $ref: "#/definitions/productBusiness"
       name:
         type: "string"
         maxLength: 128

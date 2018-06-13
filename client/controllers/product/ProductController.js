@@ -11,12 +11,12 @@ angular.module('YPOS').controller('ProductController', [
     productService,
     $window
   ){
-    $scope.$on("ProductCreated", function(){
-      _setupList();
+    $scope.$on("ProductCreated", function(ev){
+      _showRefreshAlert(ev);
     });
 
-    $scope.$on("ProductUpdated", function(){
-      _setupList();
+    $scope.$on("ProductUpdated", function(ev){
+      _showRefreshAlert(ev);
     });
 
     $scope.getPaymentRequirement = function(value) {
@@ -81,7 +81,7 @@ angular.module('YPOS').controller('ProductController', [
                       console.error(err);
                       $window.alert("Ooops, something went wrong");
                     } else {
-                      _setupList();
+                      _showRefreshAlert();
                     }
                   });
                 }
@@ -93,5 +93,17 @@ angular.module('YPOS').controller('ProductController', [
           $scope.showProgress = false;
         }
       });
+    }
+
+    function _showRefreshAlert(ev){
+
+      $mdDialog.show({
+        controllerUrl: '../../controllers/AlertDialogController.js',
+        templateUrl: '../../views/refresh-alert.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:false
+      });
+      
     }
   }]);

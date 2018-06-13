@@ -23,6 +23,7 @@ module.exports = {
 
     try {
       entity = new Product(request);
+      entity.businessId =  request.business.id;
     } catch (error) {
       return internalEventEmitter.emit(
         productChannels.Internal.EventCommit.CreatedCompletedEvent,

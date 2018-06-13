@@ -52,8 +52,10 @@ angular.module('YPOS').controller('ProviderCreateController', [
           console.error(err);
           $window.alert("Ooops, something went wrong");
         } else {
-          $rootScope.$broadcast("ProviderCreated");
-          $mdDialog.cancel();
+          setTimeout(function(){
+            $rootScope.$broadcast("ProviderCreated");
+            $mdDialog.cancel();
+          }, 500);
         }
       });
     };

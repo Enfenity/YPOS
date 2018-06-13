@@ -259,7 +259,7 @@ module.exports = {
         await user.save();
       } catch (err) {
         return internalEventEmitter.emit(
-          userChannels.Internal.UpdateCompletedEvent,
+          userChannels.Internal.EventCommit.UpdatedCompletedEvent,
           {
             statusCode: 500,
             body: err
@@ -271,7 +271,7 @@ module.exports = {
     }
 
     return internalEventEmitter.emit(
-      userChannels.Internal.UpdateCompletedEvent,
+      userChannels.Internal.EventCommit.UpdatedCompletedEvent,
       {
         statusCode: 200,
         body: user

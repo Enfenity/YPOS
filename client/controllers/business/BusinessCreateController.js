@@ -21,8 +21,12 @@ angular.module('YPOS').controller('BusinessCreateController', [
           console.error(err);
           $window.alert("Ooops, something went wrong");
         } else {
-          $rootScope.$broadcast("BusinessCreated");
-          $mdDialog.cancel();
+
+          setTimeout(function(){
+            $rootScope.$broadcast("BusinessCreated");
+            $mdDialog.cancel();
+          }, 500);
+          
         }
       });
     };

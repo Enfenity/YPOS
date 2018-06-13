@@ -6,9 +6,11 @@ var schema = mongoose.Schema;
 var business = new schema(
   {
     name: {type: String, required: true},
+    id: {type: mongoose.Schema.Types.ObjectId, required: true},
     createdAt: {type: Date, required: false},
     updatedAt: {type: Date, required: false}
-  }
+  },
+  {_id : false}
 );
 
 var paymentRequirementEnum = [0, 1, 2];
@@ -16,6 +18,7 @@ var paymentRequirementEnum = [0, 1, 2];
 var product = new schema(
   {
     business: business,
+    businessId: {type: String, required: false},
     name: {type: String, required: true},
     description: {type: String, required: false},
     price: {type: Number, required: true},

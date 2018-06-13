@@ -11,9 +11,6 @@ var _ = require('lodash');
 var internalEventEmitter = require('../../libs/InternalEventEmitter');
 const constants = require('../../Constants');
 
-/**
- * The User Service module
- */
 module.exports = {
 
   handle: async function handle(request) {
@@ -35,7 +32,6 @@ module.exports = {
             }
           );
         }
-
         successStatusCode = 201;
         break;
       case constants.pubSub.message.user.action.command.update:
@@ -59,6 +55,8 @@ module.exports = {
 
     var errors = [];
 
+    var commitResponse = new CommandResponse();
+
     _.forEach(uncommittedChanges, async function(commit){
       await commit.save();
       try {
@@ -70,10 +68,14 @@ module.exports = {
           commit
         );
 
-        await pubSub.publish(
+        commitResponse = await pubSub.publishAndWaitForResponse(
           userChannels.EventCommit.Event,
-          {},
+          userChannels.EventCommit.CompletedEvent,
+          {
+            subscriberType: constants.pubSub.recipients.gateway
+          },
           commitEvent);
+
       } catch (err) {
         errors.push(err);
       }
@@ -95,7 +97,7 @@ module.exports = {
       completedEvent,
       {
         statusCode: successStatusCode,
-        body: new CommandResponse()
+        body: commitResponse
       }
     );
   }

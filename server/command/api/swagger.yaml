@@ -92,8 +92,6 @@ definitions:
 
   replayRequest:
     type: "object"
-    required:
-    - "root"
     properties:
       root:
         type: "string"

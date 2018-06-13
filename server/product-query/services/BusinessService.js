@@ -23,7 +23,7 @@ module.exports = {
     let products = [];
 
     try {
-      products = await Product.find({'business.id': mongoose.Schema.ObjectId(request.id)});
+      products = await Product.find({'businessId': request.id});
     } catch (err) {
       return internalEventEmitter.emit(
         businessChannels.Internal.EventCommit.UpdatedCompletedEvent,
@@ -33,7 +33,7 @@ module.exports = {
         }
       );
     }
-
+    
     _.forEach(products, async function(product) {
       product.business.name = request.name;
       await product.save();

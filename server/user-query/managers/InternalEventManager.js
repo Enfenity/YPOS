@@ -7,12 +7,15 @@ const internalEventEmitter = require('../../libs/InternalEventEmitter');
 
 function emitInternalEventCommitEvents(message, channelDetails) {
   internalEventEmitter.on(channelDetails.Internal.EventCommit.CreatedCompletedEvent, function(response){
+    _sendCommitCompleted(message, response, channelDetails, constants.pubSub.message.user.action.eventCommit.created);
   });
   
   internalEventEmitter.on(channelDetails.Internal.EventCommit.DeletedCompletedEvent, function(response){
+    _sendCommitCompleted(message, response, channelDetails, constants.pubSub.message.user.action.eventCommit.deleted);
   });
   
   internalEventEmitter.on(channelDetails.Internal.EventCommit.UpdatedCompletedEvent, function(response){
+    _sendCommitCompleted(message, response, channelDetails, constants.pubSub.message.user.action.eventCommit.updated);
   });
 
   switch (message.action) {
@@ -51,7 +54,35 @@ function emitInternalQueryEvents(message, channelDetails) {
 }
 
 /**
- * Publishes an external CRUD completed event
+ * Publishes an external EventCommit completed event
+ *
+ * @param {object} request - The original CRUD request object
+ * @param {object} response - The CRUD response object
+ * @param {object} channelDetails - Contains the external channelDetails details
+ * @param {string} action - The CRUD action that was specified on the request
+ *
+ * @private
+ */
+function _sendCommitCompleted(request, response, channelDetails, action) {
+
+  // pass the same messageId that was set on the request so that the gateway can map the completed event back to 
+  // the original event
+  var completedResponse = new Message(
+    "",
+    "",
+    action,
+    response,
+    request.header.messageId
+  );
+
+  pubSub.publish(
+    channelDetails.EventCommit.CompletedEvent, 
+    {}, 
+    completedResponse);
+}
+
+/**
+ * Publishes an external Query completed event
  *
  * @param {object} request - The original CRUD request object
  * @param {object} response - The CRUD response object
@@ -77,6 +108,8 @@ function _sendQueryCompleted(request, response, channelDetails, action) {
     {}, 
     completedResponse);
 }
+
+
 module.exports = {
   emitInternalEventCommitEvents,
   emitInternalQueryEvents

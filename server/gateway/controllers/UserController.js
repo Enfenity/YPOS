@@ -16,7 +16,7 @@ module.exports = {
    * @param {IncomingMessage} response - The http response object
    * @param {function} next The callback used to pass control to the next action/middleware
    */
-  createUser: function createUser(request, response, next) {
+  createUser: function  createUser(request, response, next) {
     userService.createUser(request.swagger.params, response, next);
   },
 

@@ -41,10 +41,8 @@ angular.module('YPOS').controller('ProductUpdateController', [
           console.error(err);
           $window.alert("Ooops, something went wrong");
         } else {
-          setTimeout(function(){
-            $rootScope.$broadcast("ProductUpdated");
-            $mdDialog.cancel();
-          }, 500);
+          $rootScope.$broadcast("ProductUpdated");
+          $mdDialog.cancel();
         }
       });
     };

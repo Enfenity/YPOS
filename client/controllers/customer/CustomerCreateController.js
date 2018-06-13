@@ -52,8 +52,10 @@ angular.module('YPOS').controller('CustomerCreateController', [
           console.error(err);
           $window.alert("Ooops, something went wrong");
         } else {
-          $rootScope.$broadcast("CustomerCreated");
-          $mdDialog.cancel();
+          setTimeout(function(){
+            $rootScope.$broadcast("CustomerCreated");
+            $mdDialog.cancel();
+          }, 500);
         }
       });
     };

@@ -45,7 +45,8 @@ angular.module('YPOS').controller('ProductCreateController', [
     $scope.save = function() {
 
       $scope.model.business = {
-        name: vm.business.name
+        name: vm.business.name,
+        id: vm.business._id
       };
 
       $scope.model.price = parseInt($scope.model.price);

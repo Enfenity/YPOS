@@ -9,7 +9,8 @@ module.exports = {
       "CompletedEvent": "UserQueryCompletedEvent"
     },
     "EventCommit" : {
-      "Event": "UserEventCommitEvent"
+      "Event": "UserEventCommitEvent",
+      "CompletedEvent": "UserEventCommitCompletedEvent"
     },
     "Internal": {
       "Command": {
