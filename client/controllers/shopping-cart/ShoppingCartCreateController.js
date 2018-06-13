@@ -38,7 +38,8 @@ angular.module('YPOS').controller('ShoppingCartCreateController', [
             "type": 0,
             "product": {
               "business": {
-                "name": singleProduct.business.name
+                "name": singleProduct.business.name,
+                "id" : singleProduct.business.id
               },
               "name": singleProduct.name,
               "description": singleProduct.description,
